@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tour-app
+  namespace: delhi-tourism
+  labels:
+    app: tour-app
+spec:
+  replicas: 1   
+  selector:
+    matchLabels:
+      app: tour-app
+  template:
+    metadata:
+      labels:
+        app: tour-app
+    spec:
+      containers:
+      - name: tour-app
+        image: gangwarnishant/delhi-tourism-app:02
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URL
+          value: 'mongodb://mongo-service:27017/delhitourismdb'
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: tour-app-service
+  namespace: delhi-tourism
+spec:
+  type: NodePort
+  selector:  
+    app: tour-app   
+  ports:
+  - port: 3000  
+    targetPort: 3000
+    protocol: TCP
+    nodePort: 30002

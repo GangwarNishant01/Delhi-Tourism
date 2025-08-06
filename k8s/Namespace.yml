@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: delhi-tourism
+  labels:
+    name: delhi-tourism
+    purpose: tourism-app
+    environment: production
